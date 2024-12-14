@@ -1,4 +1,4 @@
-package com.parakeetstudios.apparition.bukkit.v1_20;
+package com.parakeetstudios.apparition.v1_20_6;
 
 public class Main {
     public static void main(String[] args) {

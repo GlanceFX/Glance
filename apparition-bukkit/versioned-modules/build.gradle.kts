@@ -1,19 +1,11 @@
 plugins {
-    id("java")
+    id("io.papermc.paperweight.userdev") version "1.7.3" apply false
 }
 
-group = "com.parakeetstudios.apparition"
-version = "1.0.0"
+subprojects {
+    apply(plugin = "io.papermc.paperweight.userdev")
 
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-    testImplementation(platform("org.junit:junit-bom:5.10.0"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
-}
-
-tasks.test {
-    useJUnitPlatform()
+    java {
+        toolchain.languageVersion.set(JavaLanguageVersion.of(21))
+    }
 }

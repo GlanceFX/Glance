@@ -93,7 +93,13 @@ public interface Model {
         return this;
     }
 
-    // todo glow
+    @NotNull
+    Color getGlowColor();
+    void setGlowWithColor(@NotNull Color color);
+    default Model glowWithColor(@NotNull Color color) {
+        setGlowWithColor(color);
+        return this;
+    }
 
     /* Interpolation */
 

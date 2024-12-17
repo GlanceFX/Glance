@@ -1,5 +1,6 @@
 package com.parakeetstudios.apparition.api.model;
 
+import com.parakeetstudios.apparition.api.utils.Color;
 import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 
@@ -19,7 +20,13 @@ public interface TextModel {
         return this;
     }
 
-    // color
+    @NotNull
+    Color getBackgroundColor();
+    void setBackgroundColor(@NotNull Color color);
+    default TextModel backgroundColor(@NotNull Color color) {
+        setBackgroundColor(color);
+        return this;
+    }
 
     byte getTextOpacity();
     void setTextOpacity(byte opacity);

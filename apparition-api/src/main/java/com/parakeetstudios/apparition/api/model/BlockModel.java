@@ -1,8 +1,12 @@
 package com.parakeetstudios.apparition.api.model;
 
-public interface BlockModel<ABlock> extends Model {
+public interface BlockModel<ABlockState> extends Model {
 
-    ABlock getBlockData();
-    void setBlockData(ABlock blockData);
+    ABlockState getBlockState();
+    void setBlockState(ABlockState blockState);
+    default BlockModel<ABlockState> blockState(ABlockState blockState) {
+        setBlockState(blockState);
+        return this;
+    }
 
 }

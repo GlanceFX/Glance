@@ -7,7 +7,7 @@ import net.kyori.adventure.text.Component;
 
 import java.util.function.Consumer;
 
-public interface ApparitionAPI<AViewer, ALocation, ABlock, AItem> {
+public interface ApparitionAPI<ALocation, ABlock, AItem> {
 
     BlockModel<ABlock> spawnBlockModel(ALocation location, ABlock block);
     BlockModel<ABlock> spawnBlockModel(ALocation location, ABlock block, Consumer<BlockModel<ABlock>> editor);

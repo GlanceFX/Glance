@@ -1,2 +1,2 @@
-# ApparitionAPI
-API For the Apparition Packet Based Display Entity FX System
+# Glance
+API and Engine Runtimes For the Glance Packet Based & Async Tracked Display Entity FX System

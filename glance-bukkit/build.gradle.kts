@@ -1,5 +1,5 @@
 dependencies {
-    implementation(project(":glance-engine"))
+    implementation(project(":glance-api"))
 
     // Include versioned modules
     implementation(project(":glance-bukkit:versioned-modules"))

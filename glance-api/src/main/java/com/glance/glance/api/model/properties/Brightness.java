@@ -1,4 +1,6 @@
-package com.glance.glance.api.utils;
+package com.glance.glance.api.model.properties;
+
+import com.glance.glance.api.utils.Validation;
 
 /**
  * Represents custom light values used for rendering, overriding the default light values

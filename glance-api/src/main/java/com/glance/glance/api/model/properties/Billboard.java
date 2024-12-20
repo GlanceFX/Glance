@@ -1,4 +1,4 @@
-package com.glance.glance.api.utils;
+package com.glance.glance.api.model.properties;
 
 /**
  * Represents the behavior of a model's orientation when rendered.

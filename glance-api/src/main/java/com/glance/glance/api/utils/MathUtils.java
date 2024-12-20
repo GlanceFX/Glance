@@ -3,7 +3,9 @@ package com.glance.glance.api.utils;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
 
-public class MathUtils {
+public final class MathUtils {
+
+    private MathUtils() {}
 
     public static boolean isZeroVector(Vector3f vector3f) {
         return (vector3f.z == 0 && vector3f.y == 0 && vector3f.x == 0);

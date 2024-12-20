@@ -1,4 +1,6 @@
-package com.glance.glance.api.utils;
+package com.glance.glance.api.model.properties;
+
+import com.glance.glance.api.utils.Validation;
 
 /**
  * Represents interpolation settings for a model, defining how smooth transitions occur.

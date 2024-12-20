@@ -1,6 +1,6 @@
 package com.glance.glance.api.model;
 
-import com.glance.glance.api.utils.Color;
+import com.glance.glance.api.model.properties.Color;
 import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 

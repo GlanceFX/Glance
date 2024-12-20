@@ -1,7 +1,6 @@
 package com.glance.glance.api.model;
 
-import com.glance.glance.api.utils.*;
-import com.parakeetstudios.apparition.api.utils.*;
+import com.glance.glance.api.model.properties.*;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;

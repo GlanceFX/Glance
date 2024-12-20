@@ -1,4 +1,4 @@
-package com.glance.glance.api.utils;
+package com.glance.glance.api.model.properties;
 
 /**
  * Represents the culling bounding box dimensions for a model, controlling when parts of the model

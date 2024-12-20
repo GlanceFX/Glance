@@ -1,4 +1,4 @@
-package com.glance.glance.api.model;
+package com.glance.glance.api.model.properties;
 
 import com.glance.glance.api.utils.Validation;
 import com.glance.glance.api.utils.MathUtils;

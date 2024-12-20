@@ -1,4 +1,6 @@
-package com.glance.glance.api.utils;
+package com.glance.glance.api.model.properties;
+
+import com.glance.glance.api.utils.Validation;
 
 /**
  * Represents the shadow properties for a model, including shadow radius and shadow strength.

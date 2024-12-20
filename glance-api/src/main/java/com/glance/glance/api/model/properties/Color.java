@@ -1,4 +1,4 @@
-package com.glance.glance.api.utils;
+package com.glance.glance.api.model.properties;
 
 public record Color(
         int alpha,

@@ -2,6 +2,9 @@ package com.glance.glance.api.model;
 
 import com.glance.glance.api.model.properties.*;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.joml.Matrix4f;
+import org.joml.Vector3f;
 
 import java.util.UUID;
 import java.util.function.Consumer;
@@ -409,6 +412,17 @@ public interface Model {
         return this;
     }
 
+    /**
+     * Renders the model at a given projected location, applying interpolation over a specified duration.
+     * This function calculates the difference between the display's current position and the desired
+     * render location, then applies this difference as a translation to the model's transform.
+     *
+     * @param position The target position (world co-ordinates) where the model should be visually rendered.
+     * @param duration The interpolation duration, in ticks, over which the transition should occur.
+     * @param extraAction A lambda that allows for additional customization of the model's transform.
+     */
+    Model renderAt(@NotNull Vector3f position, int duration, @Nullable Consumer<Transform> extraAction);
+
     /* Transform Matrix */
 
     /**
@@ -417,7 +431,7 @@ public interface Model {
      * @return The transformation matrix.
      */
     @NotNull
-    Transform getTransformation();
+    Transform getTransform();
     /**
      * Sets the transformation matrix of the model.
      *
@@ -435,48 +449,99 @@ public interface Model {
         return this;
     }
 
+    @NotNull
+    default Matrix4f getTransformMatrix() {
+        return getTransform().getMatrix();
+    }
+
+    /**
+     * Edits the transform using a custom editor function.
+     *
+     * @param editor A consumer that modifies the transform.
+     * @return This model.
+     */
+    default Model editTransform(@NotNull Consumer<Transform> editor) {
+        Transform t = getTransform();
+        editor.accept(t);
+        setTransform(t);
+        return this;
+    }
+
+    /**
+     * Applies an immediate interpolation to the transform using a custom editor function.
+     *
+     * @param editor A consumer that modifies the transform.
+     * @return This model.
+     */
+    default Model interpolateTransform(@NotNull Consumer<Transform> editor) {
+        this.setInterpolationDelay(0);
+        this.setInterpolationDuration(1);
+        return editTransform(editor);
+    }
+
+    /**
+     * Applies an interpolation to the transform over a specified duration.
+     *
+     * @param duration The interpolation duration in ticks.
+     * @param editor   A consumer that modifies the transform.
+     * @return This model.
+     */
+    default Model interpolateTransform(int duration, @NotNull Consumer<Transform> editor) {
+        this.setInterpolationDelay(0);
+        this.setInterpolationDuration(duration);
+        return editTransform(editor);
+    }
+
+    /**
+     * Applies an interpolation to the transform with a specified delay and duration.
+     *
+     * @param delay    The interpolation delay in ticks.
+     * @param duration The interpolation duration in ticks.
+     * @param editor   A consumer that modifies the transformation matrix.
+     * @return This model.
+     */
+    default Model interpolateTransform(int delay, int duration, @NotNull Consumer<Transform> editor) {
+        this.setInterpolationDelay(delay);
+        this.setInterpolationDuration(duration);
+        return editTransform(editor);
+    }
+
     /**
      * Edits the transformation matrix using a custom editor function.
      *
      * @param editor A consumer that modifies the transformation matrix.
      * @return This model.
      */
-    default Model editTransform(Consumer<Transform> editor) {
-        Transform t = getTransformation();
-        editor.accept(t);
-        setTransform(t);
+    default Model editMatrix(@NotNull Consumer<Matrix4f> editor) {
+        Matrix4f mat4 = getTransformMatrix();
+        editor.accept(mat4);
+        setTransform(Transform.fromMatrix(mat4));
         return this;
     }
 
     /**
-     * Applies an immediate interpolation to the transformation matrix using a custom editor function.
+     * Applies an interpolation to the transformation matrix with a specified delay and duration.
      *
-     * @param editor A consumer that modifies the transformation matrix.
+     * @param editor   A consumer that modifies the transformation matrix.
      * @return This model.
      */
-    default Model interpolateTransform(Consumer<Transform> editor) {
-        Transform t = getTransformation();
-        editor.accept(t);
-        setTransform(t);
+    default Model interpolateMatrix(@NotNull Consumer<Matrix4f> editor) {
         this.setInterpolationDelay(0);
         this.setInterpolationDuration(1);
-        return this;
+        return editMatrix(editor);
     }
 
     /**
-     * Applies an interpolation to the transformation matrix over a specified duration.
+     * Applies an interpolation to the transformation matrix with a specified delay and duration.
      *
      * @param duration The interpolation duration in ticks.
      * @param editor   A consumer that modifies the transformation matrix.
      * @return This model.
      */
-    default Model interpolateTransform(int duration, Consumer<Transform> editor) {
-        Transform t = getTransformation();
-        editor.accept(t);
-        setTransform(t);
+    default Model interpolateMatrix(int duration, @NotNull Consumer<Matrix4f> editor) {
         this.setInterpolationDelay(0);
         this.setInterpolationDuration(duration);
-        return this;
+        return editMatrix(editor);
     }
 
     /**
@@ -487,13 +552,10 @@ public interface Model {
      * @param editor   A consumer that modifies the transformation matrix.
      * @return This model.
      */
-    default Model interpolateTransform(int delay, int duration, Consumer<Transform> editor) {
-        Transform t = getTransformation();
-        editor.accept(t);
-        setTransform(t);
+    default Model interpolateMatrix(int delay, int duration, @NotNull Consumer<Matrix4f> editor) {
         this.setInterpolationDelay(delay);
         this.setInterpolationDuration(duration);
-        return this;
+        return editMatrix(editor);
     }
 
     /* LifeCycle */

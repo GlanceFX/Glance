@@ -13,4 +13,6 @@ include 'glance-bukkit:versioned-modules:bukkit-1_21'
 findProject(':glance-bukkit:versioned-modules:bukkit-1_21')?.name = 'bukkit-1_21'
 include 'glance-bukkit:versioned-modules:bukkit-1_20_6'
 findProject(':glance-bukkit:versioned-modules:bukkit-1_20_6')?.name = 'bukkit-1_20_6'
+include 'glance-bukkit:bukkit-common'
+findProject(':glance-bukkit:bukkit-common')?.name = 'bukkit-common'
 

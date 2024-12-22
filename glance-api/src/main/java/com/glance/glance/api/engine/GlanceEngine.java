@@ -1,8 +1,8 @@
 package com.glance.glance.api.engine;
 
-import com.glance.glance.api.model.BlockModel;
-import com.glance.glance.api.model.ItemModel;
-import com.glance.glance.api.model.TextModel;
+import com.glance.glance.api.model.GlanceBlockModel;
+import com.glance.glance.api.model.GlanceItemModel;
+import com.glance.glance.api.model.GlanceTextModel;
 import net.kyori.adventure.text.Component;
 
 import java.util.function.Consumer;
@@ -21,17 +21,17 @@ public interface GlanceEngine<AViewer, ALocation, ABlock, AItem> {
      */
     boolean isCompatible();
 
-    BlockModel<ABlock> spawnBlockModel(ALocation location, ABlock block);
-    BlockModel<ABlock> spawnBlockModel(ALocation location, ABlock block, Consumer<BlockModel<ABlock>> editor);
+    GlanceBlockModel<ABlock> spawnBlockModel(ALocation location, ABlock block);
+    GlanceBlockModel<ABlock> spawnBlockModel(ALocation location, ABlock block, Consumer<GlanceBlockModel<ABlock>> editor);
 
-    ItemModel<AItem> spawnItemModel(ALocation location, AItem item);
-    ItemModel<AItem> spawnItemModel(ALocation location, AItem item, Consumer<ItemModel<AItem>> editor);
+    GlanceItemModel<AItem> spawnItemModel(ALocation location, AItem item);
+    GlanceItemModel<AItem> spawnItemModel(ALocation location, AItem item, Consumer<GlanceItemModel<AItem>> editor);
 
-    TextModel spawnTextModel(ALocation location, Component text);
-    TextModel spawnTextModel(ALocation location, Component text, Consumer<TextModel> editor);
+    GlanceTextModel spawnTextModel(ALocation location, Component text);
+    GlanceTextModel spawnTextModel(ALocation location, Component text, Consumer<GlanceTextModel> editor);
 
-    Renderer<ALocation> getRenderer();
+    GlanceRenderer<ALocation> getRenderer();
 
-    ModelTracker<AViewer> getModelTracker();
+    GlanceModelTracker<AViewer> getModelTracker();
 
 }

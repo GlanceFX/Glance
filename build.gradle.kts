@@ -4,9 +4,9 @@ plugins {
 
 allprojects {
     plugins.apply("java")
+    plugins.apply("java-library")
 
-
-    group = "com.parakeetstudios.apparition"
+    group = "com.glance"
     version = "1.0.0"
 
     repositories {

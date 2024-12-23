@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
  * Represents a model for rendering text with customizable properties such as alignment, background color,
  * opacity, shadow, and more.
  */
-public interface GlanceTextModel {
+public interface GlanceTextModel extends GlanceModel {
 
     /**
      * Gets the text content associated with this model.

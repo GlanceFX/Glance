@@ -167,6 +167,7 @@ public class Transform {
         return this;
     }
 
+    @NotNull
     public Matrix4f getMatrix() {
         Matrix4f mat = new Matrix4f();
         mat.translate(translation);

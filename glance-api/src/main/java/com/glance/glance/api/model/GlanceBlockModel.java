@@ -1,5 +1,7 @@
 package com.glance.glance.api.model;
 
+import org.jetbrains.annotations.Nullable;
+
 /**
  * Represents a model associated with a block, extending the base {@link GlanceModel} interface.
  * Provides additional functionality to manage the block's state.
@@ -13,6 +15,7 @@ public interface GlanceBlockModel<ABlock> extends GlanceModel {
      *
      * @return The current block state.
      */
+    @Nullable
     ABlock getBlockState();
 
     /**

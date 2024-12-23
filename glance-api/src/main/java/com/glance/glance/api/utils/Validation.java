@@ -34,17 +34,33 @@ public final class Validation {
      * Checks if an object is not null; otherwise, throws a NullPointerException.
      *
      * @param obj     the object to check
+     * @param name the name of the object to check
+     * @param <T>     the type of the object
+     * @return the validated object
+     * @throws NullPointerException if the object is null
+     */
+    public static <T> T checkNotNull(T obj, String name) {
+        if (obj == null) {
+            throw new NullPointerException(name + " cannot be null!");
+        }
+        return obj;
+    }
+    /**
+     * Checks if an object is not null; otherwise, throws a NullPointerException.
+     *
+     * @param obj     the object to check
      * @param message the exception message if the object is null
      * @param <T>     the type of the object
      * @return the validated object
      * @throws NullPointerException if the object is null
      */
-    public static <T> T checkNotNull(T obj, String message) {
+    public static <T> T checkNotNullVerbose(T obj, String message) {
         if (obj == null) {
             throw new NullPointerException(message);
         }
         return obj;
     }
+
 
     /**
      * Checks if a value is within a specific range; otherwise, throws an IllegalStateException.

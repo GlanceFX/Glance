@@ -159,6 +159,13 @@ public interface GlanceModel {
      */
     void setCulling(@NotNull Culling culling);
     /**
+     * Sets the culling/view scale settings of the model.
+     *
+     * @param cullingWidth The new culling width.
+     * @param cullingHeight The new culling height.
+     */
+    void setCulling(float cullingWidth, float cullingHeight);
+    /**
      * Sets the culling settings and returns the model for chaining.
      *
      * @param culling The new culling settings.
@@ -423,25 +430,25 @@ public interface GlanceModel {
      */
     GlanceModel renderAt(@NotNull Vector3f position, int duration, @Nullable Consumer<Transform> extraAction);
 
-    /* Transform Matrix */
+    /* Transform & Matrix */
 
     /**
-     * Gets the transformation matrix of the model.
+     * Gets the transform of the model.
      *
-     * @return The transformation matrix.
+     * @return The transform.
      */
     @NotNull
     Transform getTransform();
     /**
-     * Sets the transformation matrix of the model.
+     * Sets the transform of the model.
      *
-     * @param transform The new transformation matrix.
+     * @param transform The new transform.
      */
     void setTransform(@NotNull Transform transform);
     /**
-     * Sets the transformation matrix and returns the model for chaining.
+     * Sets the transform and returns the model for chaining.
      *
-     * @param transform The new transformation matrix.
+     * @param transform The new transform.
      * @return This model.
      */
     default GlanceModel transform(@NotNull Transform transform) {
@@ -449,9 +456,35 @@ public interface GlanceModel {
         return this;
     }
 
+    /**
+     * Gets the transformation matrix of the model.
+     *
+     * @return The transformation matrix.
+     */
     @NotNull
     default Matrix4f getTransformMatrix() {
         return getTransform().getMatrix();
+    }
+
+
+    /**
+     * Sets the transformation matrix of the model.
+     *
+     * @param matrix The new transformation matrix.
+     */
+    default void setTransformationMatrix(@NotNull Matrix4f matrix) {
+        this.setTransform(Transform.fromMatrix(matrix));
+    }
+
+    /**
+     * Sets the transformation matrix and returns the model for chaining.
+     *
+     * @param matrix The new transformation matrix.
+     * @return This model.
+     */
+    default GlanceModel transformationMatrix(@NotNull Matrix4f matrix) {
+        this.setTransform(Transform.fromMatrix(matrix));
+        return this;
     }
 
     /**
@@ -557,24 +590,5 @@ public interface GlanceModel {
         this.setInterpolationDuration(duration);
         return editMatrix(editor);
     }
-
-    /* LifeCycle */
-
-    /**
-     * Updates the model.
-     */
-    void update();
-
-    /**
-     * Spawns the model for a specified viewer.
-     *
-     * @param viewer The viewer for whom the model is spawned.
-     */
-    void spawn(Object viewer);
-
-    /**
-     * Removes the model from the world.
-     */
-    void remove();
 
 }

@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
  *
  * @param <AItem> The type of the item associated with this model.
  */
-public interface GlanceItemModel<AItem> {
+public interface GlanceItemModel<AItem> extends GlanceModel {
 
     /**
      * Gets the item associated with this model.

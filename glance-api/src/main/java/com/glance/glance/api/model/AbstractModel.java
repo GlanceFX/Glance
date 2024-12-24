@@ -3,14 +3,19 @@ package com.glance.glance.api.model;
 import com.glance.glance.api.model.properties.*;
 import com.glance.glance.api.utils.Validation;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.joml.Vector3f;
 
 import java.util.UUID;
+import java.util.function.Consumer;
 
 public abstract class AbstractModel implements GlanceModel {
 
     protected int entityId;
     private final UUID uniqueId = UUID.randomUUID();
     protected boolean dirty = false;
+
+    protected Vector3f absolutePosition = new Vector3f();
 
     // Render properties
     protected float viewRange = 1.0F;
@@ -268,6 +273,45 @@ public abstract class AbstractModel implements GlanceModel {
         Validation.checkNotNull(transform, "transform");
         this.transform = transform;
         markDirty();
+    }
+
+    /* Positions */
+
+    @Override
+    public @NotNull Vector3f getAbsolutePosition() {
+        return this.absolutePosition;
+    }
+
+    @Override
+    public @NotNull Vector3f getRelativePosition() {
+        return this.transform.getTranslation();
+    }
+
+    @Override
+    public GlanceModel renderAt(@NotNull Vector3f position, int duration, @Nullable Consumer<Transform> extraAction) {
+        Vector3f delta = position.sub(this.getAbsolutePosition());
+        interpolateTransform(duration, t -> {
+            t.translate(delta);
+            if (extraAction != null) extraAction.accept(t);
+        });
+        return this;
+    }
+
+    @Override
+    public GlanceModel renderAt(@NotNull Vector3f position, @Nullable Consumer<Transform> extraAction) {
+        Vector3f delta = position.sub(this.getAbsolutePosition());
+        interpolateTransform(t -> {
+            t.translate(delta);
+            if (extraAction != null) extraAction.accept(t);
+        });
+        return this;
+    }
+
+    @Override
+    public GlanceModel renderAt(@NotNull Vector3f position) {
+        Vector3f delta = position.sub(this.getAbsolutePosition());
+        translate(delta);
+        return this;
     }
 
 }

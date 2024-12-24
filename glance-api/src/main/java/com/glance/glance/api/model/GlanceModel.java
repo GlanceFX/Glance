@@ -414,7 +414,7 @@ public interface GlanceModel {
      * @param duration The teleport interpolation duration in ticks.
      * @return This model.
      */
-    default GlanceModel teleportOver(int duration) {
+    default GlanceModel teleportDuration(int duration) {
         setTeleportDuration(duration);
         return this;
     }
@@ -429,6 +429,42 @@ public interface GlanceModel {
      * @param extraAction A lambda that allows for additional customization of the model's transform.
      */
     GlanceModel renderAt(@NotNull Vector3f position, int duration, @Nullable Consumer<Transform> extraAction);
+
+    /**
+     * Renders the model at a given projected location, applying interpolation over a specified duration.
+     * This function calculates the difference between the display's current position and the desired
+     * render location, then applies this difference as a translation to the model's transform.
+     *
+     * @param position The target position (world co-ordinates) where the model should be visually rendered.
+     * @param extraAction A lambda that allows for additional customization of the model's transform.
+     */
+    GlanceModel renderAt(@NotNull Vector3f position, @Nullable Consumer<Transform> extraAction);
+
+    /**
+     * Renders the model at a given projected location, applying interpolation over a specified duration.
+     * This function calculates the difference between the display's current position and the desired
+     * render location, then applies this difference as a translation to the model's transform.
+     *
+     * @param position The target position (world co-ordinates) where the model should be visually rendered.
+     */
+    GlanceModel renderAt(@NotNull Vector3f position);
+
+    /**
+     * Gets the absolute position of this model in WorldSpace coords
+     *
+     * @return the absolute worldspace position
+     */
+    @NotNull
+    Vector3f getAbsolutePosition();
+
+    /**
+     * Gets the relative render position of this model.
+     * This is a relative vector to the absolute worldspace position
+     *
+     * @return the relative position vector
+     */
+    @NotNull
+    Vector3f getRelativePosition();
 
     /* Transform & Matrix */
 
@@ -589,6 +625,119 @@ public interface GlanceModel {
         this.setInterpolationDelay(delay);
         this.setInterpolationDuration(duration);
         return editMatrix(editor);
+    }
+
+    /* Direct transform access */
+
+    /**
+     * Scales the model uniformly.
+     *
+     * @param scale The scale factor to apply uniformly.
+     * @return This model.
+     */
+    default GlanceModel scale(float scale) {
+        return editTransform(t -> t.scale(scale));
+    }
+
+    /**
+     * Scales the model along the X, Y, and Z axes.
+     *
+     * @param x The scale factor along the X-axis.
+     * @param y The scale factor along the Y-axis.
+     * @param z The scale factor along the Z-axis.
+     * @return This model.
+     */
+    default GlanceModel scale(float x, float y, float z) {
+        return editTransform(t -> t.scale(x,y,z));
+    }
+
+    /**
+     * Translates the model by the specified offsets.
+     *
+     * @param x The offset along the X-axis.
+     * @param y The offset along the Y-axis.
+     * @param z The offset along the Z-axis.
+     * @return This model.
+     */
+    default GlanceModel translate(float x, float y, float z) {
+        return editTransform(t -> t.translate(x, y, z));
+    }
+
+    /**
+     * Translates the model to the specified position.
+     *
+     * @param position The target position.
+     * @return This model.
+     */
+    default GlanceModel translate(@NotNull Vector3f position) {
+        return editTransform(t -> t.setTranslation(position));
+    }
+
+    /**
+     * Rotates the model to the left around the specified axis.
+     *
+     * @param angle The rotation angle in radians.
+     * @param axisX The X component of the axis vector.
+     * @param axisY The Y component of the axis vector.
+     * @param axisZ The Z component of the axis vector.
+     * @return This model.
+     */
+    default GlanceModel rotateLeft(float angle, float axisX, float axisY, float axisZ) {
+        return editTransform(t -> t.rotateLeft(angle, axisX, axisY, axisZ));
+    }
+
+    /**
+     * Rotates the model to the left around the specified axis vector.
+     *
+     * @param angle The rotation angle in radians.
+     * @param axis The axis vector.
+     * @return This model.
+     */
+    default GlanceModel rotateLeft(float angle, @NotNull Vector3f axis) {
+        return editTransform(t -> t.rotateLeft(angle, axis));
+    }
+
+    /**
+     * Rotates the model to the right around the specified axis.
+     *
+     * @param angle The rotation angle in radians.
+     * @param axisX The X component of the axis vector.
+     * @param axisY The Y component of the axis vector.
+     * @param axisZ The Z component of the axis vector.
+     * @return This model.
+     */
+    default GlanceModel rotateRight(float angle, float axisX, float axisY, float axisZ) {
+        return editTransform(t -> t.rotateRight(angle, axisX, axisY, axisZ));
+    }
+
+    /**
+     * Rotates the model to the right around the specified axis vector.
+     *
+     * @param angle The rotation angle in radians.
+     * @param axis The axis vector.
+     * @return This model.
+     */
+    default GlanceModel rotateRight(float angle, @NotNull Vector3f axis) {
+        return editTransform(t -> t.rotateRight(angle, axis));
+    }
+
+    /**
+     * Applies a transformation matrix directly to the model.
+     *
+     * @param matrix The transformation matrix to apply.
+     * @return This model.
+     */
+    default GlanceModel applyMatrix(@NotNull Matrix4f matrix) {
+        return editMatrix(mat -> mat.mul(matrix));
+    }
+
+    /**
+     * Sets the model's transformation matrix to an identity matrix.
+     *
+     * @return This model.
+     */
+    default GlanceModel resetMatrix() {
+        return editMatrix(Matrix4f::identity);
     }
 
 }

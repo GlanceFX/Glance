@@ -48,10 +48,10 @@ public class Transform {
         @NotNull Vector3f scale,
         @NotNull Quaternionf rightRotation
     ) {
-        Validation.checkNotNull(translation, "translation cannot be null");
-        Validation.checkNotNull(leftRotation, "leftRotation cannot be null");
-        Validation.checkNotNull(scale, "scale cannot be null");
-        Validation.checkNotNull(rightRotation, "rightRotation cannot be null");
+        Validation.checkNotNull(translation, "translation");
+        Validation.checkNotNull(leftRotation, "leftRotation");
+        Validation.checkNotNull(scale, "scale");
+        Validation.checkNotNull(rightRotation, "rightRotation");
         this.translation = translation;
         this.leftRotation = leftRotation;
         this.scale = scale;
@@ -64,7 +64,7 @@ public class Transform {
     }
 
     public Transform setTranslation(@NotNull Vector3f translation) {
-        Validation.checkNotNull(translation, "translation cannot be null");
+        Validation.checkNotNull(translation, "translation");
         this.translation = translation;
         return this;
     }
@@ -90,7 +90,7 @@ public class Transform {
     }
 
     public Transform setLeftRotation(@NotNull Quaternionf leftRotation) {
-        Validation.checkNotNull(leftRotation, "leftRotation cannot be null");
+        Validation.checkNotNull(leftRotation, "leftRotation");
         this.leftRotation = leftRotation;
         return this;
     }
@@ -105,8 +105,8 @@ public class Transform {
         return this;
     }
 
-    public Transform rotateLeft(float angle, Vector3f rotation) {
-        this.leftRotation.rotateAxis(angle, rotation);
+    public Transform rotateLeft(float angle, @NotNull Vector3f rotation) {
+        this.leftRotation.rotateAxis(angle, Validation.checkNotNull(rotation, "rotation vector"));
         return this;
     }
 
@@ -116,7 +116,7 @@ public class Transform {
     }
 
     public Transform setScale(@NotNull Vector3f scale) {
-        Validation.checkNotNull(scale, "scale cannot be null");
+        Validation.checkNotNull(scale, "scale");
         this.scale = scale;
         return this;
     }
@@ -147,7 +147,7 @@ public class Transform {
     }
 
     public Transform setRightRotation(@NotNull Quaternionf rightRotation) {
-        Validation.checkNotNull(rightRotation, "rightRotation cannot be null");
+        Validation.checkNotNull(rightRotation, "rightRotation quaternion");
         this.rightRotation = rightRotation;
         return this;
     }
@@ -162,8 +162,8 @@ public class Transform {
         return this;
     }
 
-    public Transform rotateRight(float angle, Vector3f rotation) {
-        this.rightRotation.rotateAxis(angle, rotation);
+    public Transform rotateRight(float angle, @NotNull Vector3f rotation) {
+        this.rightRotation.rotateAxis(angle, Validation.checkNotNull(rotation, "rotation vector"));
         return this;
     }
 

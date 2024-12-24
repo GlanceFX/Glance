@@ -11,6 +11,7 @@ dependencies {
     // paperweight.foliaDevBundle("1.20.6-R0.1-SNAPSHOT")
 
     implementation(project(":glance-bukkit:api:api-1_20_6"))
+    implementation(project(":glance-common"))
 }
 
 tasks {

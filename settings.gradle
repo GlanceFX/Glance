@@ -5,6 +5,7 @@ rootProject.name = "Glance"
 
 /* Base API */
 include 'glance-api'
+include 'glance-common'
 
 /* Bukkit Modules */
 include 'glance-bukkit:api'
